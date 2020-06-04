@@ -4,10 +4,10 @@
 
 {% block body %}
 
-<div class="example-wrapper">
-  <h1>Registro de usuario</h1>
+<div>
+  <h1>Registro de usuario</h1> <hr/>
 
-  {{ form_start(form) }}
+  {{ form_start(form, {'attr': {'class': 'col-12 col-lg-8'}}) }}
   {{ form_widget(form) }}
   {{ form_end(form) }}
 </div>
