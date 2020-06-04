@@ -2,7 +2,10 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 
 /**
  * User
@@ -12,133 +15,149 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class User
 {
-    /**
-     * @var int
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
+  /**
+   * @var int
+   *
+   * @ORM\Column(name="id", type="integer", nullable=false)
+   * @ORM\Id
+   * @ORM\GeneratedValue(strategy="IDENTITY")
+   */
+  private $id;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="role", type="string", length=50, nullable=true)
-     */
-    private $role;
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="role", type="string", length=50, nullable=true)
+   */
+  private $role;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="name", type="string", length=100, nullable=true)
-     */
-    private $name;
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="name", type="string", length=100, nullable=true)
+   */
+  private $name;
 
-    /**
-     * @var string|null
-     *
-     * @ORM\Column(name="surname", type="string", length=100, nullable=true)
-     */
-    private $surname;
+  /**
+   * @var string|null
+   *
+   * @ORM\Column(name="surname", type="string", length=100, nullable=true)
+   */
+  private $surname;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="email", type="string", length=50, nullable=false)
-     */
-    private $email;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="email", type="string", length=50, nullable=false)
+   */
+  private $email;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     */
-    private $password;
+  /**
+   * @var string
+   *
+   * @ORM\Column(name="password", type="string", length=255, nullable=false)
+   */
+  private $password;
 
-    /**
-     * @var \DateTime|null
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=true)
-     */
-    private $createdAt;
+  /**
+   * @var \DateTime|null
+   *
+   * @ORM\Column(name="created_at", type="datetime", nullable=true)
+   */
+  private $createdAt;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+  /**
+   * @ORM\OneToMany(targetEntity="App\Entity\Task", mappedBy="user")
+   */
+  private $tasks;
 
-    public function getRole(): ?string
-    {
-        return $this->role;
-    }
+  public function __construct()
+  {
+    $this->tasks = new ArrayCollection(); //Tendra un array de obj
+  }
 
-    public function setRole(?string $role): self
-    {
-        $this->role = $role;
+  public function getId(): ?int
+  {
+    return $this->id;
+  }
 
-        return $this;
-    }
+  public function getRole(): ?string
+  {
+    return $this->role;
+  }
 
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
+  public function setRole(?string $role): self
+  {
+    $this->role = $role;
 
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getName(): ?string
+  {
+    return $this->name;
+  }
 
-    public function getSurname(): ?string
-    {
-        return $this->surname;
-    }
+  public function setName(?string $name): self
+  {
+    $this->name = $name;
 
-    public function setSurname(?string $surname): self
-    {
-        $this->surname = $surname;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getSurname(): ?string
+  {
+    return $this->surname;
+  }
 
-    public function getEmail(): ?string
-    {
-        return $this->email;
-    }
+  public function setSurname(?string $surname): self
+  {
+    $this->surname = $surname;
 
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getEmail(): ?string
+  {
+    return $this->email;
+  }
 
-    public function getPassword(): ?string
-    {
-        return $this->password;
-    }
+  public function setEmail(string $email): self
+  {
+    $this->email = $email;
 
-    public function setPassword(string $password): self
-    {
-        $this->password = $password;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getPassword(): ?string
+  {
+    return $this->password;
+  }
 
-    public function getCreatedAt(): ?\DateTimeInterface
-    {
-        return $this->createdAt;
-    }
+  public function setPassword(string $password): self
+  {
+    $this->password = $password;
 
-    public function setCreatedAt(?\DateTimeInterface $createdAt): self
-    {
-        $this->createdAt = $createdAt;
+    return $this;
+  }
 
-        return $this;
-    }
+  public function getCreatedAt(): ?\DateTimeInterface
+  {
+    return $this->createdAt;
+  }
 
+  public function setCreatedAt(?\DateTimeInterface $createdAt): self
+  {
+    $this->createdAt = $createdAt;
 
+    return $this;
+  }
+
+  /**
+   * @return Collection|Task[]
+   */
+  public function getTasks(): Collection
+  {
+    return $this->tasks;
+  }
 }
