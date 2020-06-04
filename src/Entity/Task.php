@@ -57,7 +57,7 @@ class Task
     private $createdAt;
 
     /**
-     * @var \Users
+     * @var \User
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="tasks")
      * @ORM\JoinColumns({
