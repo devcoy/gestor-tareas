@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use PhpParser\Node\Stmt\Return_;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 
 /**
@@ -13,7 +15,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="Users")
  * @ORM\Entity
  */
-class User
+class User implements UserInterface
 {
   /**
    * @var int
@@ -141,12 +143,12 @@ class User
     return $this;
   }
 
-  public function getCreatedAt(): ?\DateTimeInterface
+  public function getCreatedAt()
   {
     return $this->createdAt;
   }
 
-  public function setCreatedAt(?\DateTimeInterface $createdAt): self
+  public function setCreatedAt($createdAt): self
   {
     $this->createdAt = $createdAt;
 
@@ -159,5 +161,30 @@ class User
   public function getTasks(): Collection
   {
     return $this->tasks;
+  }
+
+  /**
+   * Definimos que dato usara para hacer login
+   */
+  public function getUsername()
+  {
+    return $this->email;
+  }
+
+  public function getSalt() {
+    return null;
+  }
+
+  public function getRoles() {
+    return array('ROLE_USER');
+    // return $this->getRole(); // Para usar un rol dinámico
+  }
+
+  /**
+   * Quita datos sensibles del usuario
+   */
+  public function eraseCredentials()
+  {
+    
   }
 }
