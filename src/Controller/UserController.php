@@ -23,7 +23,7 @@ class UserController extends AbstractController
     $form->handleRequest($request);
 
     // Comprobamos si se envía el formulario
-    if ($form->isSubmitted()) {
+    if ($form->isSubmitted() && $form->isValid()) {
       // var_dump($user);
       $user->setRole('ROLE_USER');
       $user->setCreatedAt(new \DateTime('now'));
