@@ -3,8 +3,15 @@
 #    controller: App\Controller\DefaultController::index
 
 tasks:
-  path: /tasks
+  path: /
   controller: App\Controller\TaskController::index
+
+# Rutas de usuario
 register:
   path: /registro
   controller: App\Controller\UserController::userRegister
+login:
+  path: /login
+  controller: App\Controller\UserController::userLogin
+logout:
+  path: /logout
