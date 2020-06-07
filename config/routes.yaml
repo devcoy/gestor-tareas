@@ -8,3 +8,10 @@ tasks:
 register:
   path: /registro
   controller: App\Controller\UserController::userRegister
+
+login:
+  path: /login
+  controller: App\Controller\UserController::userLogin
+
+logout:
+  path: /logout

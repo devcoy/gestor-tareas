@@ -1,11 +1,15 @@
 security:
-    encoders:
+    encoders: # Para cifrar la contraseña
         App\Entity\User:
             algorithm: bcrypt
             cost: 4
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
         users_in_memory: { memory: null }
+        login_provider: # nombre
+            entity: #Entidad
+                class: App\Entity\User # clase
+                property: email # será el username  (clave) para identificar el usuario
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
@@ -13,6 +17,13 @@ security:
         main:
             anonymous: lazy
             provider: users_in_memory
+            form_login: # Configurar el login
+                login_path: login
+                check_path: login
+                provider: login_provider # Config para saber a que entidad ira a buscar los datos
+            logout:
+                path: /logout # ruta
+                target: /login # a donde me redigira al hacer el logout
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

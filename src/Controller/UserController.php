@@ -10,6 +10,7 @@ use DateTime;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class UserController extends AbstractController
 {
@@ -41,5 +42,18 @@ class UserController extends AbstractController
     return $this->render('user/register.html.twig', [
       'form' => $form->createView(),
     ]);
+  }
+
+  /**
+   * Login de usuario
+   */
+  public function userLogin(AuthenticationUtils $auth_utils) {
+    $error = $auth_utils->getLastAuthenticationError(); // Obtener el error en caso de proder hacer auth
+    $last_username = $auth_utils->getLastUsername(); // Obtener el último usuario que intento hacer login
+    
+    return $this->render('user/login.html.twig', array(
+      'error' => $error,
+      'last_username' => $last_username
+    ));
   }
 }
