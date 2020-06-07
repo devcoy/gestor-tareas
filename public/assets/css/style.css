@@ -36,9 +36,9 @@ Estilos a border de la card con base en su prioridad
 .hight {
   border-color: #DC3446 !important;
 }
-.normal {
-  border-color: #017BFF;
+.medium {
+  border-color: #FFC106;
 }
 .low {
-  border-color: #17A2B8;
+  border-color: #017BFF;
 }

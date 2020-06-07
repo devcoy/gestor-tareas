@@ -4,10 +4,12 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Entity\User;
-
+use App\Form\TasksType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskController extends AbstractController
 {
@@ -44,8 +46,27 @@ class TaskController extends AbstractController
   /**
    * Crear tarea
    */
-  public function create(Request $request) {
-    //return 'hola';
-    return $this->render('task/create.html.twig');
+  public function create(Request $request, UserInterface $user)
+  {
+    $task = new Task();
+    $form = $this->createForm(TasksType::class, $task);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $task->setCreatedAt(new DateTime('now'));
+      $task->setUser($user);
+      //var_dump($task);
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($task);
+      $em->flush();
+
+      return $this->redirect(
+        $this->generateUrl('detail_task', array('id' => $task->getId()))
+      );
+    }
+    return $this->render('task/create.html.twig', array(
+      'form' => $form->createView()
+    ));
   }
 }
