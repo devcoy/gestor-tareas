@@ -1,0 +1,24 @@
+body {
+  background-color: #f5f5f5;
+  color: #3c3c3c;
+}
+
+.btn-success {
+  background-color: #F86000;
+  border: 0;
+}
+.btn-success:hover {
+  background-color: #F86000;
+  opacity: 0.9;
+}
+/**
+* Estilos a formulario
+*/
+.form-group ul {
+  padding-left: 10px;
+}
+.form-group ul li {
+  list-style-type: none;
+  color: #dc3446;
+  font-size: 12px;
+}
