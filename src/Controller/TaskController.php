@@ -10,31 +10,33 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
 {
+  /**
+   * Listar todas las tareas
+   */
   public function index()
   {
     // Test de entidades y relaciones
     $em = $this->getDoctrine()->getManager();
     $task_repo = $this->getDoctrine()->getRepository(Task::class);
     $tasks = $task_repo->findAll();
-    
-    /*foreach ($tasks as $task) {
-      echo $task->getTitle();
-      echo $task->getUser()->getEmail() . '<hr/>';
-    }
-
-    $user_repo = $this->getDoctrine()->getRepository(User::class);
-    $users = $user_repo->findAll();
-    foreach ($users as $user) {
-      echo '<h1>' . $user->getName() . '</h1> <br/>';
-      $tasks = $user->getTasks();
-      foreach ($tasks as $task) {
-        echo $task->getTitle();
-      }
-      echo '<hr/>';
-    } */
 
     return $this->render('task/index.html.twig', [
       'tasks' => $tasks
     ]);
+  }
+
+  /**
+   * Ver una tarea en particular
+   */
+  public function detail(Task $task)
+  {
+    if (!$task) {
+      return $this->redirectToRoute('task', array(
+        'message' => 'La tarea no existe'
+      ));
+    }
+    return $this->render('task/detail.html.twig', array(
+      'task' => $task
+    ));
   }
 }

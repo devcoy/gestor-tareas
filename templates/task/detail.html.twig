@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Detalles de la tarea
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<h1>{{ task.title }}</h1><hr/>
+		<div class="info row text-center mt-4">
+			<div class="col-12 col-lg-4">
+				<span class="alert alert-warning" role="alert">Fecha: {{ task.createdAt | date('d/M/Y') }}</span>
+			</div>
+			<div class="col-12 col-lg-4">
+				<span class="alert alert-secondary" role="alert">Estimación: {{ task.hours }} hrs.</span>
+			</div>
+			<div class="col-12 col-lg-4">
+				<span class="alert alert-primary" role="alert">Prioridad: {{ task.priority | upper }}</span>
+			</div>
+		</div>
+		<section class="my-5">
+			{{ task.content }}
+		</section>		
+	</div>
+{% endblock %}

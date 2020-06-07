@@ -15,3 +15,9 @@ login:
   controller: App\Controller\UserController::userLogin
 logout:
   path: /logout
+
+
+  # Rutas de tareas
+detail_task:
+  path: /tarea/{id}
+  controller: App\Controller\TaskController::detail
