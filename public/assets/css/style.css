@@ -22,3 +22,23 @@ body {
   color: #dc3446;
   font-size: 12px;
 }
+
+.task {
+margin-bottom: 30px;
+}
+.task_priority {
+  padding-bottom: 10px !important;
+}
+
+/**
+Estilos a border de la card con base en su prioridad
+*/
+.hight {
+  border-color: #DC3446 !important;
+}
+.normal {
+  border-color: #017BFF;
+}
+.low {
+  border-color: #17A2B8;
+}

@@ -13,10 +13,11 @@ class TaskController extends AbstractController
   public function index()
   {
     // Test de entidades y relaciones
-    /* $em = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager();
     $task_repo = $this->getDoctrine()->getRepository(Task::class);
     $tasks = $task_repo->findAll();
-    foreach ($tasks as $task) {
+    
+    /*foreach ($tasks as $task) {
       echo $task->getTitle();
       echo $task->getUser()->getEmail() . '<hr/>';
     }
@@ -33,7 +34,7 @@ class TaskController extends AbstractController
     } */
 
     return $this->render('task/index.html.twig', [
-      'controller_name' => 'TaskController',
+      'tasks' => $tasks
     ]);
   }
 }
