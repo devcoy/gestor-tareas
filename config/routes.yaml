@@ -21,3 +21,6 @@ logout:
 detail_task:
   path: /tarea/{id}
   controller: App\Controller\TaskController::detail
+create_task:
+  path: /tarea/crear
+  controller: App\Controller\TaskController::create

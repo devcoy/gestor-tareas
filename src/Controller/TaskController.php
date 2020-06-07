@@ -6,6 +6,7 @@ use App\Entity\Task;
 use App\Entity\User;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class TaskController extends AbstractController
@@ -38,5 +39,13 @@ class TaskController extends AbstractController
     return $this->render('task/detail.html.twig', array(
       'task' => $task
     ));
+  }
+
+  /**
+   * Crear tarea
+   */
+  public function create(Request $request) {
+    //return 'hola';
+    return $this->render('task/create.html.twig');
   }
 }
