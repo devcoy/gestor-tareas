@@ -66,6 +66,7 @@ class TaskController extends AbstractController
       );
     }
     return $this->render('task/create.html.twig', array(
+      'pageTitle' => 'Crear tarea',
       'form' => $form->createView()
     ));
   }
@@ -73,11 +74,40 @@ class TaskController extends AbstractController
   /**
    * Listar solo mis tareas
    */
-  public function myTasks(UserInterface $user) {
+  public function myTasks(UserInterface $user)
+  {
     $my_tasks = $user->getTasks();
 
     return $this->render('task/my-tasks.html.twig', array(
       'my_tasks' => $my_tasks
+    ));
+  }
+
+  /**
+   * Editar una tarea
+   */
+  public function editTask(Request $request, UserInterface $user, Task $task)
+  {
+    if ($user->getId() != $task->getUser()->getId()) {
+      return $this->redirectToRoute('tasks');
+    }
+
+    $form = $this->createForm(TasksType::class, $task);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {        
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($task);
+      $em->flush();
+
+      return $this->redirect(
+        $this->generateUrl('detail_task', array('id' => $task->getId()))
+      );
+    }
+    return $this->render('task/create.html.twig', array(
+      'isEdit' => true,
+      'pageTitle' => 'Editar tarea',
+      'form' => $form->createView()
     ));
   }
 }

@@ -43,7 +43,7 @@ class TasksType extends AbstractType {
       'attr' => array('class' => 'form-control'),
     ));
     $builder->add('submit', SubmitType::class, array(
-      'label' => 'Agregar',
+      'label' => 'Guardar',
       'row_attr' => array('class' => 'form-group'),
       'attr' => array('class' => 'btn btn-success'),
     ));
