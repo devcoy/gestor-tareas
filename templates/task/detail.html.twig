@@ -9,17 +9,47 @@
 		<h1>{{ task.title }}</h1><hr/>
 		<div class="info row text-center mt-4">
 			<div class="col-12 col-lg-4">
-				<span class="alert alert-warning" role="alert">Fecha: {{ task.createdAt | date('d/M/Y') }}</span>
+				<span class="alert alert-warning" role="alert">Fecha:
+					{{ task.createdAt | date('d/M/Y') }}</span>
 			</div>
 			<div class="col-12 col-lg-4">
-				<span class="alert alert-secondary" role="alert">Estimación: {{ task.hours }} hrs.</span>
+				<span class="alert alert-secondary" role="alert">Estimación:
+					{{ task.hours }}
+					hrs.</span>
 			</div>
 			<div class="col-12 col-lg-4">
-				<span class="alert alert-primary" role="alert">Prioridad: {{ task.priority | upper }}</span>
+				<span class="alert alert-primary" role="alert">Prioridad:
+					{{ task.priority | upper }}</span>
 			</div>
 		</div>
 		<section class="my-5">
 			{{ task.content }}
-		</section>		
+		</section>
+
+		<section class="mb-5 actions text-right">
+			<a class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal">Eliminar</a>
+		</section>
+	</div>
+
+
+	<!-- Delete Modal -->
+	<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger">
+					<h5 class="modal-title text-light" id="deleteModalLabel">Eliminar tarea</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					¿Estas seguro que deseas eliminar la tarea?
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Cancelar</button>
+					<a href="{{ path('task_delete', {'id': task.id }) }}" class="btn btn-sm btn-danger">Eliminar</a>
+				</div>
+			</div>
+		</div>
 	</div>
 {% endblock %}

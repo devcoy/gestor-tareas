@@ -12,8 +12,7 @@
 				</div>
 				<p class="card-text">{{ task.content | slice(0, 50) }}...</p>
 				<div class="actions text-right">
-					{% if app.user.id and app.user.id == task.user.id %}
-						<a href="{{ path('task_delete', {'id': task.id }) }}" class="btn btn-danger btn-sm">Eliminar</a>
+					{% if app.user.id and app.user.id == task.user.id %}						
 						<a href="{{ path('task_edit', {'id': task.id }) }}" class="btn btn-warning btn-sm">Editar</a>
 					{% endif %}
 					<a href="{{ path('detail_task', {'id': task.id }) }}" class="btn btn-primary btn-sm">Ver</a>
@@ -21,4 +20,5 @@
 			</div>
 		</div>
 	</div>
+
 {% endfor %}
