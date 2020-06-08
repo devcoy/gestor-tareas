@@ -3,7 +3,7 @@
 #    controller: App\Controller\DefaultController::index
 
 tasks:
-  path: /
+  path: /tareas
   controller: App\Controller\TaskController::index
 
 # Rutas de usuario
