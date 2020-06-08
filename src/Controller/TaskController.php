@@ -95,7 +95,7 @@ class TaskController extends AbstractController
     $form = $this->createForm(TasksType::class, $task);
     $form->handleRequest($request);
 
-    if ($form->isSubmitted() && $form->isValid()) {        
+    if ($form->isSubmitted() && $form->isValid()) {
       $em = $this->getDoctrine()->getManager();
       $em->persist($task);
       $em->flush();
@@ -109,5 +109,19 @@ class TaskController extends AbstractController
       'pageTitle' => 'Editar tarea',
       'form' => $form->createView()
     ));
+  }
+
+  /**
+   * Eliminar tarea
+   */
+  public function deleteTask(Task $task, UserInterface $user)
+  {
+    if (!$user || $user->getId() != $task->getUser()->getId()) {
+      return $this->redirectToRoute('tasks');
+    }
+    $em = $this->getDoctrine()->getManager();
+    $em->remove($task);
+    $em->flush();
+    return $this->redirectToRoute('tasks');
   }
 }
