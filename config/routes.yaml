@@ -15,3 +15,24 @@ login:
   controller: App\Controller\UserController::userLogin
 logout:
   path: /logout
+
+
+  # Rutas de tareas
+detail_task:
+  path: /tarea/{id}
+  controller: App\Controller\TaskController::detail
+
+create_task:
+  path: /crear-tarea
+  controller: App\Controller\TaskController::create
+
+my_tasks:
+  path: /mis-tareas
+  controller: App\Controller\TaskController::myTasks
+
+task_edit:
+  path: /editar-tarea/{id}
+  controller: App\Controller\TaskController::editTask
+task_delete:
+  path: /eliminar-tarea/{id}
+  controller: App\Controller\TaskController::deleteTask

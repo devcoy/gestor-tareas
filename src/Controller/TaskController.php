@@ -4,36 +4,124 @@ namespace App\Controller;
 
 use App\Entity\Task;
 use App\Entity\User;
-
+use App\Form\TasksType;
+use DateTime;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class TaskController extends AbstractController
 {
+  /**
+   * Listar todas las tareas
+   */
   public function index()
   {
     // Test de entidades y relaciones
-    /* $em = $this->getDoctrine()->getManager();
+    $em = $this->getDoctrine()->getManager();
     $task_repo = $this->getDoctrine()->getRepository(Task::class);
     $tasks = $task_repo->findAll();
-    foreach ($tasks as $task) {
-      echo $task->getTitle();
-      echo $task->getUser()->getEmail() . '<hr/>';
-    }
-
-    $user_repo = $this->getDoctrine()->getRepository(User::class);
-    $users = $user_repo->findAll();
-    foreach ($users as $user) {
-      echo '<h1>' . $user->getName() . '</h1> <br/>';
-      $tasks = $user->getTasks();
-      foreach ($tasks as $task) {
-        echo $task->getTitle();
-      }
-      echo '<hr/>';
-    } */
 
     return $this->render('task/index.html.twig', [
-      'controller_name' => 'TaskController',
+      'tasks' => $tasks
     ]);
+  }
+
+  /**
+   * Ver una tarea en particular
+   */
+  public function detail(Task $task)
+  {
+    if (!$task) {
+      return $this->redirectToRoute('task', array(
+        'message' => 'La tarea no existe'
+      ));
+    }
+    return $this->render('task/detail.html.twig', array(
+      'task' => $task
+    ));
+  }
+
+  /**
+   * Crear tarea
+   */
+  public function create(Request $request, UserInterface $user)
+  {
+    $task = new Task();
+    $form = $this->createForm(TasksType::class, $task);
+
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $task->setCreatedAt(new DateTime('now'));
+      $task->setUser($user);
+      //var_dump($task);
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($task);
+      $em->flush();
+
+      return $this->redirect(
+        $this->generateUrl('detail_task', array('id' => $task->getId()))
+      );
+    }
+    return $this->render('task/create.html.twig', array(
+      'pageTitle' => 'Crear tarea',
+      'form' => $form->createView()
+    ));
+  }
+
+  /**
+   * Listar solo mis tareas
+   */
+  public function myTasks(UserInterface $user)
+  {
+    $my_tasks = $user->getTasks();
+
+    return $this->render('task/my-tasks.html.twig', array(
+      'my_tasks' => $my_tasks
+    ));
+  }
+
+  /**
+   * Editar una tarea
+   */
+  public function editTask(Request $request, UserInterface $user, Task $task)
+  {
+    if ($user->getId() != $task->getUser()->getId()) {
+      return $this->redirectToRoute('tasks');
+    }
+
+    $form = $this->createForm(TasksType::class, $task);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($task);
+      $em->flush();
+
+      return $this->redirect(
+        $this->generateUrl('detail_task', array('id' => $task->getId()))
+      );
+    }
+    return $this->render('task/create.html.twig', array(
+      'isEdit' => true,
+      'pageTitle' => 'Editar tarea',
+      'form' => $form->createView()
+    ));
+  }
+
+  /**
+   * Eliminar tarea
+   */
+  public function deleteTask(Task $task, UserInterface $user)
+  {
+    if (!$user || $user->getId() != $task->getUser()->getId()) {
+      return $this->redirectToRoute('tasks');
+    }
+    $em = $this->getDoctrine()->getManager();
+    $em->remove($task);
+    $em->flush();
+    return $this->redirectToRoute('tasks');
   }
 }

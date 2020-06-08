@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mis tareas
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+		<h1>Mis tareas</h1><hr/>
+		<div class="row">
+    {% include('includes/list-task.html.twig') with {'tasks': my_tasks} %}
+    </div>
+	</div>
+{% endblock %}
