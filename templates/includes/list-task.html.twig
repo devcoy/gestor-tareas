@@ -1,0 +1,22 @@
+{% for task in tasks %}
+	<div class="col-12 col-lg-4">
+		<div class="card task {{ task.priority }}">
+			<div class="card-body">
+				<h5 class="card-title">{{ task.title }}</h5>
+				<div class="task_priority">
+					<small>{{ task.priority | upper}}
+						|
+						{{ task.hours }}
+						hrs
+					</small>
+				</div>
+				<p class="card-text">{{ task.content | slice(0, 50) }}...</p>
+				<div class="actions text-right">
+					<a href="#" class="btn btn-danger btn-sm">Eliminar</a>
+					<a href="#" class="btn btn-warning btn-sm">Editar</a>
+					<a href="{{ path('detail_task', {'id': task.id }) }}" class="btn btn-primary btn-sm">Ver</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endfor %}
